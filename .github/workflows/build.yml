@@ -4,19 +4,36 @@ concurrency:
   cancel-in-progress: true
 on:
   push:
-  workflow_dispatch:
+    tags:
+      - 'release-*'
 jobs:
   build-project:
-    name: Build Project
+    name: Build project and release
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.2
+      
+      - name: Install dependencies
+        run: sudo apt install -y autotools-dev automake
 
       - name: Configure and Build Project
         run: |
-          sudo apt install -y autotools-dev automake
           autoreconf -ivf
           ./configure
           make
           tree
+      
+      - name: Build changelog
+        id: github_release
+        uses: mikepenz/release-changelog-builder-action@v4
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          body: ${{steps.github_release.outputs.changelog || 'No changelog available'}}
+          files: |
+            sshpass

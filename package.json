@@ -1,0 +1,5 @@
+{
+    "scripts": {
+        "release": "git tag -a release-$(date +'%Y-%m-%d-%H-%M-%S') -m 'Release' && git push --tags"
+    }
+}
