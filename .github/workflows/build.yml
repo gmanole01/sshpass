@@ -15,6 +15,7 @@ jobs:
 
       - name: Configure and Build Project
         run: |
+          apt-get install -y autotools-dev automake
           ./configure
           make
           tree
