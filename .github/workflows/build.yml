@@ -16,5 +16,5 @@ jobs:
       - name: Configure and Build Project
         run: |
           ./configure
-          make dist-zip
+          make
           tree
