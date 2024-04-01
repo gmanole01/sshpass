@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v4.1.2
       
       - name: Install dependencies
-        run: sudo apt install -y autotools-dev automake
+        run: sudo apt install -y autotools-dev automake libc6
 
       - name: Configure and Build Project
         run: |
