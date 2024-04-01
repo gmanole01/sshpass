@@ -16,6 +16,7 @@ jobs:
       - name: Configure and Build Project
         run: |
           sudo apt install -y autotools-dev automake
+          autoreconf -ivf
           ./configure
           make
           tree
